@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.BookExam" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.BookExam.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.BookExam.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.BookExam.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
