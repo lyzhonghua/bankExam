@@ -13,8 +13,6 @@ import org.mockito.Mockito.`when`
 @RunWith(AndroidJUnit4::class)
 class NetInstrumentTest {
 
-
-    // 定义一个 ViewModel 的接口
     interface MyViewModelInterface {
         fun getData(): LiveData<String>
     }

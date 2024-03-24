@@ -1,17 +1,27 @@
 package com.example.bookexam.adapters
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bookexam.activities.DetailActivity
 import com.example.bookexam.databinding.RecyLayoutBinding
 import com.example.bookexam.models.Book
+import com.example.bookexam.vm.BookDBViewModel
 
-class BookAdapter(private val books:List<Book>): RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
+class BookAdapter(private val viewModel: BookDBViewModel): RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     private lateinit var binding: RecyLayoutBinding
+    private var books:List<Book> = listOf()
+    fun setData(books: List<Book>){
+        this.books = books
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         binding = RecyLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,23 +31,29 @@ class BookAdapter(private val books:List<Book>): RecyclerView.Adapter<BookAdapte
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = books[position]
         holder.itemView.apply {
-            binding.textTitle.text = book.title
-            binding.textAuthor.text = book.author
-            binding.textISBN.text = book.isbn
-            binding.textYear.text = book.year
-            this.setOnClickListener {
-                AlertDialog.Builder(this.context)
-                    .setTitle("Do you want to delete it?")
-                    .setMessage("Title: ${book.title}\nAuthor: ${book.author}\nISBN: ${book.isbn}\nYear: ${book.year}")
-                    .setNegativeButton("Cancel") { dialog, _ ->
-                        dialog.dismiss()
+            binding.textTitle.text = "Title: ${book.title}"
+            binding.textAuthor.text = "Author: ${book.author}"
+            binding.textISBN.text = "ISBN: ${book.isbn}"
+            binding.textYear.text = "Year: ${book.year}"
 
-                    }
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+            binding.updateButton.setOnClickListener {
+                Toast.makeText(it.context, "Update button clicked", Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+                bundle.putInt("id", book.id)
+                bundle.putString("title", book.title)
+                bundle.putString("author", book.author)
+                bundle.putString("isbn", book.isbn)
+                bundle.putInt("year", book.year)
+                val intent = Intent(this.context, DetailActivity::class.java)
+                intent.putExtras(bundle)
+                this.context.startActivity(intent)
             }
+
+            binding.deleteButton.setOnClickListener {
+                Toast.makeText(it.context, "Delete button clicked", Toast.LENGTH_SHORT).show()
+                viewModel.delete(book)
+            }
+
         }
     }
 

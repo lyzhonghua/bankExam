@@ -1,46 +1,46 @@
-package com.example.bookexam
+package com.example.bookexam.activities
 
+import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bookexam.R
 import com.example.bookexam.adapters.BookAdapter
 import com.example.bookexam.databinding.ListLayoutBinding
 import com.example.bookexam.models.Book
-import com.example.bookexam.vm.BookViewModel
+import com.example.bookexam.vm.BookDBViewModel
 
 class ListActivity : ComponentActivity() {
     private lateinit var binding: ListLayoutBinding
-    private val viewModel: BookViewModel by viewModels()
+    private val viewModel: BookDBViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.list_layout)
 
-        // fake data
-        val books = listOf(
-            Book("The Great Gatsby", "F. Scott Fitzgerald", "978-3-16-148410-0", "1925"),
-            Book("To Kill a Mockingbird", "Harper Lee", "978-3-16-148410-1", "1960"),
-            Book("1984", "George Orwell", "978-3-16-148410-2", "1949"),
+        viewModel.getBooksFromDatabase()
 
-        )
-
-        binding.getDataButton.setOnClickListener {
-            viewModel.getBooks()
-        }
-
-        val adapter = BookAdapter(books)
+        val adapter = BookAdapter(viewModel)
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply { orientation = LinearLayoutManager.VERTICAL }
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.recyclerView.adapter = adapter
 
+        viewModel.booksData.observe(this) {
+            adapter.setData(it)
+        }
 
-        viewModel.booksLiveData.observe(this) {
-            Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
+        viewModel.bookDeleteResult.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, "Book Deleted", Toast.LENGTH_SHORT).show()
+                viewModel.getBooksFromDatabase()
+            } else {
+                Toast.makeText(this, "Book Deletion Failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }

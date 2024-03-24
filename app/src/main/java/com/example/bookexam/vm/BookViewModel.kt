@@ -3,6 +3,7 @@ package com.example.bookexam.vm
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bookexam.db.BookDatabase
 import com.example.bookexam.models.Book
 import com.example.bookexam.services.BookService
 import kotlinx.coroutines.Dispatchers
@@ -10,10 +11,10 @@ import kotlinx.coroutines.launch
 
 class BookViewModel : ViewModel() {
 
-    val booksLiveData: MutableLiveData<String> = MutableLiveData()
-    val bookDeleteResult: MutableLiveData<Boolean> = MutableLiveData()
-    val bookCreateResult: MutableLiveData<Int> = MutableLiveData()
-    val bookUpdateResult: MutableLiveData<Boolean> = MutableLiveData()
+    private val booksLiveData: MutableLiveData<String> = MutableLiveData()
+    private val bookDeleteResult: MutableLiveData<Boolean> = MutableLiveData()
+    private val bookCreateResult: MutableLiveData<Int> = MutableLiveData()
+    private val bookUpdateResult: MutableLiveData<Boolean> = MutableLiveData()
 
 
     /**
@@ -73,5 +74,6 @@ class BookViewModel : ViewModel() {
             bookUpdateResult.value = result.getOrNull()
         }
     }
+
 
 }

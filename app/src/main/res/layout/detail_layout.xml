@@ -10,7 +10,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Page" />
+            android:text="Detail Page" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,10 +84,10 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/createBook"
+            android:id="@+id/updateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save To Database" />
+            android:text="Update To Database" />
 
 
     </LinearLayout>

@@ -44,14 +44,6 @@ interface BookService {
     suspend fun getBooks() : String
 
     /**
-     * get a book by id from the server
-     */
-    @GET("book/{id}")
-    suspend fun getBookById(@retrofit2.http.Path("id") id: String) {
-
-    }
-
-    /**
      * create a book to server
      * return the id of the book
      */
