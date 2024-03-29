@@ -1,5 +1,6 @@
 package com.example.bookexam.vm
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,9 +13,7 @@ class BookDBViewModel : ViewModel() {
 
     val booksData: MutableLiveData<List<Book>> = MutableLiveData()
     val bookDeleteResult: MutableLiveData<Int> = MutableLiveData()
-    val bookCreateResult: MutableLiveData<Int> = MutableLiveData()
-    val bookUpdateResult: MutableLiveData<Boolean> = MutableLiveData()
-
+    val bookUpdateResult: LiveData<Boolean> = MutableLiveData()
 
 
     // create a book to database

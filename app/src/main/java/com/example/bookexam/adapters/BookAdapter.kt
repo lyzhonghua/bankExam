@@ -1,14 +1,14 @@
 package com.example.bookexam.adapters
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bookexam.activities.DetailActivity
+import com.example.bookexam.R
 import com.example.bookexam.databinding.RecyLayoutBinding
 import com.example.bookexam.models.Book
 import com.example.bookexam.vm.BookDBViewModel
@@ -30,11 +30,12 @@ class BookAdapter(private val viewModel: BookDBViewModel): RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = books[position]
+        binding.book = books[position]
         holder.itemView.apply {
-            binding.textTitle.text = "Title: ${book.title}"
-            binding.textAuthor.text = "Author: ${book.author}"
-            binding.textISBN.text = "ISBN: ${book.isbn}"
-            binding.textYear.text = "Year: ${book.year}"
+//            binding.textTitle.text = "Title: ${book.title}"
+//            binding.textAuthor.text = "Author: ${book.author}"
+//            binding.textISBN.text = "ISBN: ${book.isbn}"
+//            binding.textYear.text = "Year: ${book.year}"
 
             binding.updateButton.setOnClickListener {
                 Toast.makeText(it.context, "Update button clicked", Toast.LENGTH_SHORT).show()
@@ -44,9 +45,8 @@ class BookAdapter(private val viewModel: BookDBViewModel): RecyclerView.Adapter<
                 bundle.putString("author", book.author)
                 bundle.putString("isbn", book.isbn)
                 bundle.putInt("year", book.year)
-                val intent = Intent(this.context, DetailActivity::class.java)
-                intent.putExtras(bundle)
-                this.context.startActivity(intent)
+
+                Navigation.findNavController(it).navigate(R.id.fragment_nav_3, bundle)
             }
 
             binding.deleteButton.setOnClickListener {

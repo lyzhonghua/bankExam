@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:startDestination="@id/fragment_nav_1">
+
+    <fragment
+        android:id="@+id/fragment_nav_1"
+        android:name="com.example.bookexam.fragments.BookCreateFragment">
+        <action
+            android:id="@+id/to_fragment1"
+            app:destination="@id/fragment_nav_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_nav_2"
+        android:name="com.example.bookexam.fragments.BookListFragment">
+        <action
+            android:id="@+id/to_fragment2"
+            app:destination="@id/fragment_nav_3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_nav_3"
+        android:name="com.example.bookexam.fragments.BookDetailFragment">
+        <action
+            android:id="@+id/to_fragment3"
+            app:destination="@id/fragment_nav_1" />
+    </fragment>
+<!--    <activity-->
+<!--        android:id="@+id/activity_second"-->
+<!--        android:name="com.example.navigationdemo.part1.SecondActivity" />-->
+
+</navigation>

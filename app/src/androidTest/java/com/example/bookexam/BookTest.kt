@@ -8,6 +8,8 @@ import com.example.bookexam.db.BookDao
 import com.example.bookexam.db.BookDatabase
 import com.example.bookexam.models.Book
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -17,8 +19,8 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class BookTest {
 
-    lateinit var bookDao: BookDao
-    lateinit var bookDatabase: BookDatabase
+    private lateinit var bookDao: BookDao
+    private lateinit var bookDatabase: BookDatabase
 
     @Before
     fun createDatabase() {
@@ -38,6 +40,9 @@ class BookTest {
     fun insertBook() {
         runBlocking {
             bookDao.insert(Book(title = "mockTitle", author = "mockAuthor", year = 1999, isbn = "mockIsbn"))
+            val book = bookDao.getByTitle("mockTitle")
+
+            assertThat(book.title, equalTo("mockTitle"))
         }
     }
 

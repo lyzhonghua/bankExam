@@ -40,4 +40,10 @@ interface BookDao {
      */
     @Query("SELECT * FROM book WHERE id = :bookId")
     fun getById(bookId: Int): Book
+
+    /**
+     * query by title
+     */
+    @Query("SELECT * FROM book WHERE title = :title")
+    fun getByTitle(title: String): Book
 }
